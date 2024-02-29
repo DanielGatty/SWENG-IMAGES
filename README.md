@@ -11,6 +11,13 @@ control the size and position of the image on screen and the duration the image 
 should be delivered through a compressed ZIP file with all tools necessary to run the product using Java 11.
 Example images (if provided) should be stored using PWS compliant formats.
 
+From assignment spec:
+
+images:source file, time of (or sequence of) presentation, size and position on screen, duration.
+The user interface must also provide the following features(their actual implemented appearance may vary substantially):
+•a file browser highlighting media presentation files locally from file systems and/or remotely
+•mouse and/or touchscreen support
+
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import java.time.Duration;
