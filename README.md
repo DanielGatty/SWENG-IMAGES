@@ -26,6 +26,8 @@ The user interface must also provide the following features (their actual implem
 - mouse and/or touchscreen support
 
 import javafx.scene.image.Image;
+
 import javafx.scene.image.ImageView;
+
 import java.time.Duration;
 
