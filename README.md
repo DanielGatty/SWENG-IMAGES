@@ -31,3 +31,14 @@ import javafx.scene.image.ImageView;
 
 import java.time.Duration;
 
+Package contains 2 classes:
+SingleImage
+Presentation
+
+SingleImage extends ImageView from JavaFX and provides the functionality of bringing 1 image onto a JavaFX Scene. It can be positioned, sized and resized, and timings set for when the image shows and for how long.
+
+SingleImage defaults:
+Size - the size of the raw image. 
+Position - centre of GUI
+Duration - 0 which refers to the image not disapearing.
+Delay - 0 which refers to the image being show when the scene loads.
