@@ -17,6 +17,8 @@ import java.io.IOException;
  * JavaFX App
  */
 public class App extends Application {
+    public static final int WIDTH = 800;
+    public static final int HEIGHT = 600;
 
     private static Scene scene;
 
@@ -27,9 +29,18 @@ public class App extends Application {
         Image image = new Image(new FileInputStream(file));
         imageView.setImage(image);
 
+
+        imageView.setFitWidth(300);
+        imageView.setFitHeight(200);
+
+        imageView.setX(WIDTH / 2 - imageView.getFitWidth() / 2);
+        imageView.setY(HEIGHT / 2 - imageView.getFitHeight() / 2);
+
+        imageView.setPreserveRatio(true);
+
         Group root = new Group(imageView);
 
-        scene = new Scene(root, 800, 600);
+        scene = new Scene(root, WIDTH, HEIGHT);
 
         stage.setTitle("Loading an image");
 
