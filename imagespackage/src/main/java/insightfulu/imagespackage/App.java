@@ -5,12 +5,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 
 /**
@@ -24,21 +20,15 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        ImageView imageView = new ImageView();
-        File file = new File("src/main/resources/images/stockimage.jpg");
-        Image image = new Image(new FileInputStream(file));
-        imageView.setImage(image);
+        SingleImage singleImage = new SingleImage("src/main/resources/images/stockimage.jpg");
 
+        singleImage.setFitWidth(300);
+        singleImage.setFitHeight(200);
 
-        imageView.setFitWidth(300);
-        imageView.setFitHeight(200);
+        singleImage.setX(WIDTH / 2 - singleImage.getFitWidth() / 2);
+        singleImage.setY(HEIGHT / 2 - singleImage.getFitHeight() / 2);
 
-        imageView.setX(WIDTH / 2 - imageView.getFitWidth() / 2);
-        imageView.setY(HEIGHT / 2 - imageView.getFitHeight() / 2);
-
-        imageView.setPreserveRatio(true);
-
-        Group root = new Group(imageView);
+        Group root = new Group(singleImage);
 
         scene = new Scene(root, WIDTH, HEIGHT);
 
