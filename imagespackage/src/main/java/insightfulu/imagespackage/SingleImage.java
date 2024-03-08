@@ -44,6 +44,20 @@ public class SingleImage extends ImageView {
         setPreserveRatio(true);
     }
 
+    public SingleImage(String source, double xPos, double yPos, double scale, double rotation) throws FileNotFoundException {
+        File imageFile = new File(source);
+        Image image = new Image(new FileInputStream(imageFile));
+        IMAGE_WIDTH = image.getWidth();
+        IMAGE_HEIGHT = image.getHeight();
+        setImage(image);
+        setX(xPos);
+        setY(yPos);
+        setFitWidth(IMAGE_WIDTH * scale);
+        setFitHeight(IMAGE_HEIGHT * scale);
+        setPreserveRatio(true);
+        setRotate(rotation);
+    }
+
     public double getImageWidth() {
         return IMAGE_WIDTH;
     }
