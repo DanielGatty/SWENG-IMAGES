@@ -21,10 +21,11 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         String filePath = "src/main/resources/images/stockimage.jpg";
-        double xPos = WIDTH / 2 - 1200 / 2;
-        double yPos = HEIGHT / 2 - 795 / 2;
+        double scale = 0.7;
+        double xPos = WIDTH / 2 - (1200 * scale) / 2;
+        double yPos = HEIGHT / 2 - (795 * scale) / 2;
 
-        SingleImage singleImage = new SingleImage(filePath, xPos, yPos);
+        SingleImage singleImage = new SingleImage(filePath, xPos, yPos, scale);
 
         Group root = new Group(singleImage);
 
