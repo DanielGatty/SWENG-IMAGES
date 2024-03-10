@@ -36,9 +36,9 @@ public class SingleImage extends ImageView {
         setImage(image);
 
         // Image position is based on top left corner of image
-        sourceWidth = image.getWidth();
-        sourceHeight = image.getHeight();
-        
+        sourceWidth = viewWidth = image.getWidth();
+        sourceHeight = viewHeight = image.getHeight();
+     
         // Default behaviour is to preserve aspect ratio
         setPreserveRatio(true);
     }
@@ -55,8 +55,8 @@ public class SingleImage extends ImageView {
         setImage(image);
 
         // Dimensions are based on original image size
-        sourceWidth = image.getWidth();
-        sourceHeight = image.getHeight();
+        sourceWidth = viewWidth = image.getWidth();
+        sourceHeight = viewHeight = image.getHeight();
 
         // Image position is based on top left corner of image
         xPosition = xPos;
