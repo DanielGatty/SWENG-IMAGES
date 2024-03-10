@@ -9,6 +9,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+import insightfulu.imagespackage.SlideShow.Direction;
+
 /**
  * JavaFX App
  */
@@ -24,12 +26,12 @@ public class App extends Application {
         String filePath2 = "src/main/resources/images/stockimage2.jpg";
         String filePath3 = "src/main/resources/images/stockimage3.jpg";
 
-        SlideShow slideShow = new SlideShow();
+        SingleImage image1 = new SingleImage(filePath);
 
-        slideShow.addImage(filePath, filePath2, filePath3);
-        slideShow.changeWidth(WIDTH);
-        slideShow.changeHeight(HEIGHT);
-        slideShow.changeDuration(3);
+        SlideShow slideShow = new SlideShow(0, 0, WIDTH, HEIGHT, 2.5, Direction.BACKWARD);
+
+        slideShow.addImage(image1);
+        slideShow.addImage(filePath2, filePath3);
 
         Group root = new Group(slideShow);
 
@@ -42,16 +44,6 @@ public class App extends Application {
         stage.show();
 
         slideShow.play();
-
-        new Thread ( new Runnable() {
-            public void run() {
-                try {
-                    Thread.sleep(30000);
-                } catch (InterruptedException ie) {}
-                slideShow.removeImage(0);
-                slideShow.changeDuration(1);
-            }
-        }).start();
     }
 
     static void setRoot(String fxml) throws IOException {

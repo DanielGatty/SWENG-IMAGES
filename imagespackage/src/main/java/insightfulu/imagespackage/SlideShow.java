@@ -16,6 +16,7 @@ public class SlideShow extends ImageView {
         BACKWARD
     }
 
+    // Member variables for the slideshow
     private ArrayList<SingleImage> slides;
     private double slideXPosition;
     private double slideYPosition;
@@ -23,120 +24,185 @@ public class SlideShow extends ImageView {
     private double slideHeight;
     private double slideDuration;
     private Direction slideDirection;
-    private int slideLength;
     private volatile int slideCurrent;
     private boolean isPlaying;
     private volatile boolean hasChanged;
 
+    /*
+     * Constructor with no information specified. Just uses default
+     * values for everything
+     */
     public SlideShow() {
         slides = new ArrayList<SingleImage>();
+
+        // Setting position
         slideXPosition = 0;
         slideYPosition = 0;
+        setX(slideXPosition);
+        setY(slideYPosition);
+
+        // Setting dimensions
         slideWidth = 0;
         slideHeight = 0;
+        setFitWidth(slideWidth);
+        setFitHeight(slideHeight);
+
+        // Setting initial values of the slide show
         slideDuration = 1;
         slideDirection = Direction.FORWARD;
-        slideLength = 0;
         slideCurrent = 0;
         isPlaying = false;
         hasChanged = false;
     }
 
+    /*
+     * Constructor that specifies the position of the slideshow.
+     * The rest is still just left as a default value
+     */
     public SlideShow(double xPos, double yPos) {
         slides = new ArrayList<SingleImage>();
+
+        // Setting position
         slideXPosition = xPos;
         slideYPosition = yPos;
+        setX(slideXPosition);
+        setY(slideYPosition);
+
+        // Setting dimensions
         slideWidth = 0;
         slideHeight = 0;
+        setFitWidth(slideWidth);
+        setFitHeight(slideHeight);
+
+        // Setting initial values of the slide show
         slideDuration = 1;
         slideDirection = Direction.FORWARD;
-        slideLength = 0;
         slideCurrent = 0;
         isPlaying = false;
         hasChanged = false;
     }
 
+    /*
+     * Constructor with position and dimensions specified.
+     */
     public SlideShow(double xPos, double yPos, double width, double height) {
         slides = new ArrayList<SingleImage>();
+
+        // Setting position
+        slideXPosition = xPos;
         slideXPosition = xPos;
         slideYPosition = yPos;
+        setX(slideXPosition);
+        setY(slideYPosition);
+
+        // Setting dimensions
         slideWidth = width;
         slideHeight = height;
+        setFitWidth(slideWidth);
+        setFitHeight(slideHeight);
+
+        // Setting initial values of the slide show
         slideDuration = 1;
         slideDirection = Direction.FORWARD;
-        slideLength = 0;
         slideCurrent = 0;
         isPlaying = false;
         hasChanged = false;
     }
 
+    /*
+     * Constructor with position, dimensions and slide duration specified
+     */
     public SlideShow(double xPos, double yPos, double width, double height, double duration) {
         slides = new ArrayList<SingleImage>();
+
+        // Setting position
         slideXPosition = xPos;
         slideYPosition = yPos;
+        setX(slideXPosition);
+        setY(slideYPosition);
+
+        // Setting dimensions
         slideWidth = width;
         slideHeight = height;
+        setFitWidth(slideWidth);
+        setFitHeight(slideHeight);
+        
+        // Setting initial values of the slide show
         slideDuration = duration;
         slideDirection = Direction.FORWARD;
-        slideLength = 0;
         slideCurrent = 0;
         isPlaying = false;
         hasChanged = false;
     }
 
+    /*
+     * Constructor with all parameters specified
+     */
     public SlideShow(double xPos, double yPos, double width, double height, double duration, Direction direction) {
         slides = new ArrayList<SingleImage>();
+        
+        // Setting position
         slideXPosition = xPos;
         slideYPosition = yPos;
+        setX(slideXPosition);
+        setY(slideYPosition);
+
+        // Setting dimensions
         slideWidth = width;
         slideHeight = height;
+        setFitWidth(slideWidth);
+        setFitHeight(slideHeight);
+
+        // Setting initial values of the slide show
         slideDuration = duration;
         slideDirection = direction;
-        slideLength = 0;
         slideCurrent = 0;
         isPlaying = false;
         hasChanged = false;
     }
 
+    /*
+     * Method lets you add images to the slideshow using single images
+     */
     public void addImage(SingleImage ... images) {
         for (SingleImage image: images) {
+            // If we haven't already set dimensions
             if (slideWidth == 0 && slideHeight == 0) {
                 slideWidth = image.getImageWidth();
                 slideHeight = image.getImageHeight();
+                setFitWidth(slideWidth);
+                setFitHeight(slideHeight);
             }
             slides.add(image);
-            ++slideLength;
         }
         updateSlideShow();
     }
 
+    /*
+     * Method lets you add images to the slideshow using strings
+     */
     public void addImage(String ... images) throws FileNotFoundException {
         SingleImage newImage;
         for (String image: images) {
             newImage = new SingleImage(image);
+            // If we haven't already set dimensions
             if (slideWidth == 0 && slideHeight == 0) {
                 slideWidth = newImage.getImageWidth();
                 slideHeight = newImage.getImageHeight();
             } 
             slides.add(newImage);
-            ++slideLength;
         }
         updateSlideShow();
     }
 
+    /*
+     * Method lets you remove images from the slide show by specifiying
+     * an index
+     */
     public void removeImage(int index) {
-        // What happens when we remove a picture
-        // send a has change = true to stop the slideshow
-        // remove the index
-        // if the index is less than the current index
-        //  - decrement the current index
-        // decrement the length
         hasChanged = true;
         slides.remove(index);
-        if (index < slideCurrent) {
-            --slideCurrent;
-        }
-        --slideLength;
+        slideCurrent = 0;
         updateSlideShow();
     }
 
@@ -184,23 +250,31 @@ public class SlideShow extends ImageView {
         updateSlideShow();
     }
 
+    /*
+     * Method is used to run the slide show in a separate thread. Must be called
+     * every time the slideshow is updated in order to incorporate these changes
+     */
     private void updateSlideShow() {
         hasChanged = true;
         if (isPlaying) {
             new Thread (new Runnable() { public void run() {
                     hasChanged = false;
-                    while (hasChanged == false) {
+                    while (hasChanged == false && slides.size() > 0) {
                         setImage(slides.get(slideCurrent).getImage());
                         try {
                             Thread.sleep((int) (slideDuration * 1000));
                         } catch (InterruptedException ie) {}
-                        if (slideDirection == Direction.FORWARD) {
+                        if (slideDirection == Direction.FORWARD && slides.size() != 0) {
                             ++slideCurrent;
+                            slideCurrent %= slides.size();
                         } else {
                             --slideCurrent;
+                            if (slideCurrent == -1)
+                                slideCurrent += slides.size();
                         }
-                        slideCurrent %= slideLength;
                     }
+                    if (slides.size() == 0)
+                        setVisible(false);
                 }
             }).start();
         }
@@ -235,7 +309,7 @@ public class SlideShow extends ImageView {
     }
 
     public int getSlideLength() {
-        return slideLength;
+        return slides.size();
     }
 
     public boolean isPlaying() {
