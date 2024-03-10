@@ -17,7 +17,7 @@ public class SingleImage extends ImageView {
     private double imageHeight;
     private double xPosition;
     private double yPosition;
-    private double scale;
+    private double scale; // Scale can go above 1.0 to enlarge images
     private double angle;
 
     private Image image;
@@ -96,11 +96,11 @@ public class SingleImage extends ImageView {
     }
 
     /*
-     * Constructor requires the image source, x/y coordinates and 
-     * scale. The size will be the original dimensions multiplied by
-     * the scale, and will be displayed at x,y. The image will be 
-     * rotated at a specified number of degrees rotated clockwise about
-     * the center of the image
+     * Constructor requires the image source, x/y coordinates, scale
+     * and angle. The size will be the original dimensions multiplied 
+     * by the scale, and will be displayed at x,y. The image will be 
+     * rotated at a specified number of degrees rotated clockwise 
+     * about the center of the image
      */
     public SingleImage(String source, double xPos, double yPos, double scale, double angle) throws FileNotFoundException {
         // Loading image file
@@ -125,7 +125,53 @@ public class SingleImage extends ImageView {
         // Setting angle of rotation
         setRotate(angle);
 
+        // Default behaviour is to preserve aspect ratio
         setPreserveRatio(true);
+    }
+
+    /*
+     * Constructor requires the image source, x/y coordinates, scale, angle
+     * and a delay until showing. The size will be the original dimensions 
+     * multiplied by the scale, and will be displayed at x,y. The image 
+     * will be rotated at a specified number of degrees rotated clockwise 
+     * about the center of the image. The image will be shown after the delay
+     * in seconds, with millisecond resolution
+     */
+    public SingleImage(String source, double xPos, double yPos, double scale, double angle, double delay) throws FileNotFoundException {
+        // Loading image file
+        File imageFile = new File(source);
+        image = new Image(new FileInputStream(imageFile));
+        setImage(image);
+
+        // Dimensions are based on original image size
+        imageWidth = image.getWidth();
+        imageHeight = image.getHeight();
+
+        // Image position is based on top left corner of image
+        xPosition = xPos;
+        yPosition = yPos;
+        setX(xPos);
+        setY(yPos);
+
+        // Setting image size according to scale
+        setFitWidth(imageWidth * scale);
+        setFitHeight(imageHeight * scale);
+
+        // Setting angle of rotation
+        setRotate(angle);
+
+        // Default behaviour is to preserve aspect ratio
+        setPreserveRatio(true);
+
+        setVisible(false);
+        new Thread ( new Runnable() {
+            public void run() {
+                try {
+                    Thread.sleep((int) (delay * 1000));
+                } catch (InterruptedException ie) {}
+                setVisible(true);
+            }
+        }).start();
     }
 
     public double getImageWidth() {
