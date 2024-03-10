@@ -22,7 +22,7 @@ public class SlideShow {
     private double slideDuration;
     private Direction slideDirection;
     private int slideLength;
-    private int slideCurrent;
+    private volatile int slideCurrent;
     private boolean isPlaying;
     private volatile boolean hasChanged;
 
@@ -98,6 +98,7 @@ public class SlideShow {
 
     public void addImage(SingleImage ... images) {
         for (SingleImage image: images) {
+            image.hide();
             image.changeX(slideXPosition);
             image.changeY(slideYPosition);
             if (slideWidth == 0 && slideHeight == 0) {
@@ -117,6 +118,7 @@ public class SlideShow {
         SingleImage newImage;
         for (String image: images) {
             newImage = new SingleImage(image);
+            newImage.hide();
             newImage.changeX(slideXPosition);
             newImage.changeY(slideYPosition);
             if (slideWidth == 0 && slideHeight == 0) {
@@ -192,6 +194,23 @@ public class SlideShow {
 
     private void updateSlideShow() {
         hasChanged = true;
+        new Thread (new Runnable() {
+            public void run() {
+                while (hasChanged == false) {
+                    slides.get(slideCurrent).show();
+                    try {
+                        Thread.sleep((int) (slideDuration * 1000));
+                    } catch (InterruptedException ie) {}
+                    slides.get(slideCurrent).hide();
+                    if (slideDirection == Direction.FORWARD) {
+                        ++slideCurrent;
+                    } else {
+                        --slideCurrent;
+                    }
+                    slideCurrent %= slideLength;
+                }
+            }
+        }).start();
     }
 
     public SingleImage getImage(int index) {
