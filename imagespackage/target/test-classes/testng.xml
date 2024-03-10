@@ -1,0 +1,8 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="MyTestSuite">
+ <test name="MyTest">
+   <classes>
+     <class name="insightfulu.campuscompass.campuscompass1.AppTest"/>
+   </classes>
+ </test>
+</suite>
