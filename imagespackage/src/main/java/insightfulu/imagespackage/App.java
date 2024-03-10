@@ -21,11 +21,15 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException, InterruptedException {
         String filePath = "src/main/resources/images/stockimage.jpg";
-        double scale = 0.2;
+        String newFilePath = "src/main/resources/images/stockimage2.jpg";
+        double scale = 0.5;
         double xPos = WIDTH / 2 - (1200 * scale) / 2;
         double yPos = HEIGHT / 2 - (795 * scale) / 2;
+        double angle = 120;
+        double delay = 2.5;
+        double duration = 2.5;
 
-        SingleImage singleImage = new SingleImage(filePath, xPos, yPos, scale, 0, 2.5, 2.5);
+        SingleImage singleImage = new SingleImage(filePath, xPos, yPos, scale);
 
         Group root = new Group(singleImage);
 
@@ -50,5 +54,4 @@ public class App extends Application {
     public static void main(String[] args) {
         launch();
     }
-
 }

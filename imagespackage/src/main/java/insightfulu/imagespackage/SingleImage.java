@@ -8,8 +8,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 /**
- * SingleImage class represents a single image. This class contains the 
- * information necessary to display a single image and manipulate it
+ * SingleImage class represents all of the functionality for manipulating
+ * a single image.
  */
 public class SingleImage extends ImageView {
     // Constants related to the image, these can be manipulated
@@ -176,6 +176,7 @@ public class SingleImage extends ImageView {
         // Default behaviour is to preserve aspect ratio
         setPreserveRatio(true);
 
+        // Hiding the image, then displaying after the delay
         setVisible(false);
         new Thread ( new Runnable() {
             public void run() {
@@ -225,6 +226,7 @@ public class SingleImage extends ImageView {
         // Default behaviour is to preserve aspect ratio
         setPreserveRatio(true);
 
+        // Hiding the image, then displaying after the delay, hiding after duration
         setVisible(false);
         new Thread ( new Runnable() {
             public void run() {
@@ -242,7 +244,7 @@ public class SingleImage extends ImageView {
 
     /*
      * Method allows you to change the image file by specifying a new
-     * source for the image. The other 
+     * source for the image. The other properties are maintained
      */
     public void changeSource(String source) throws FileNotFoundException {
         File imageFile = new File(source);
