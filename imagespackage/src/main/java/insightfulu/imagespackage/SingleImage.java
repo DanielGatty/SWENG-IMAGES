@@ -13,8 +13,10 @@ import java.io.FileNotFoundException;
  */
 public class SingleImage extends ImageView {
     // Constants related to the image, these can be manipulated
-    private double imageWidth;
-    private double imageHeight;
+    private double sourceWidth; // Based on source image
+    private double sourceHeight; // Based on source image
+    private double viewWidth;
+    private double viewHeight;
     private double xPosition;
     private double yPosition;
     private double scale; // Scale can go above 1.0 to enlarge images
@@ -34,8 +36,8 @@ public class SingleImage extends ImageView {
         setImage(image);
 
         // Image position is based on top left corner of image
-        imageWidth = image.getWidth();
-        imageHeight = image.getHeight();
+        sourceWidth = image.getWidth();
+        sourceHeight = image.getHeight();
         
         // Default behaviour is to preserve aspect ratio
         setPreserveRatio(true);
@@ -53,8 +55,8 @@ public class SingleImage extends ImageView {
         setImage(image);
 
         // Dimensions are based on original image size
-        imageWidth = image.getWidth();
-        imageHeight = image.getHeight();
+        sourceWidth = image.getWidth();
+        sourceHeight = image.getHeight();
 
         // Image position is based on top left corner of image
         xPosition = xPos;
@@ -78,8 +80,8 @@ public class SingleImage extends ImageView {
         setImage(image);
 
         // Dimensions are based on original image size
-        imageWidth = image.getWidth();
-        imageHeight = image.getHeight();
+        sourceWidth = image.getWidth();
+        sourceHeight = image.getHeight();
         
         // Image position is based on top left corner of image
         xPosition = xPos;
@@ -88,8 +90,10 @@ public class SingleImage extends ImageView {
         setY(yPos);
 
         // Setting image size according to scale
-        setFitWidth(imageWidth * scale);
-        setFitHeight(imageHeight * scale);
+        viewWidth = sourceWidth * scale;
+        viewHeight = sourceHeight * scale;
+        setFitWidth(sourceWidth * scale);
+        setFitHeight(sourceHeight * scale);
 
         // Default behaviour is to preserve aspect ratio
         setPreserveRatio(true);
@@ -109,8 +113,8 @@ public class SingleImage extends ImageView {
         setImage(image);
 
         // Dimensions are based on original image size
-        imageWidth = image.getWidth();
-        imageHeight = image.getHeight();
+        sourceWidth = image.getWidth();
+        sourceHeight = image.getHeight();
 
         // Image position is based on top left corner of image
         xPosition = xPos;
@@ -119,8 +123,10 @@ public class SingleImage extends ImageView {
         setY(yPos);
 
         // Setting image size according to scale
-        setFitWidth(imageWidth * scale);
-        setFitHeight(imageHeight * scale);
+        viewWidth = sourceWidth * scale;
+        viewHeight = sourceHeight * scale;
+        setFitWidth(sourceWidth * scale);
+        setFitHeight(sourceHeight * scale);
 
         // Setting angle of rotation
         setRotate(angle);
@@ -144,8 +150,8 @@ public class SingleImage extends ImageView {
         setImage(image);
 
         // Dimensions are based on original image size
-        imageWidth = image.getWidth();
-        imageHeight = image.getHeight();
+        sourceWidth = image.getWidth();
+        sourceHeight = image.getHeight();
 
         // Image position is based on top left corner of image
         xPosition = xPos;
@@ -154,8 +160,10 @@ public class SingleImage extends ImageView {
         setY(yPos);
 
         // Setting image size according to scale
-        setFitWidth(imageWidth * scale);
-        setFitHeight(imageHeight * scale);
+        viewWidth = sourceWidth * scale;
+        viewHeight = sourceHeight * scale;
+        setFitWidth(sourceWidth * scale);
+        setFitHeight(sourceHeight * scale);
 
         // Setting angle of rotation
         setRotate(angle);
@@ -189,8 +197,8 @@ public class SingleImage extends ImageView {
         setImage(image);
 
         // Dimensions are based on original image size
-        imageWidth = image.getWidth();
-        imageHeight = image.getHeight();
+        sourceWidth = image.getWidth();
+        sourceHeight = image.getHeight();
 
         // Image position is based on top left corner of image
         xPosition = xPos;
@@ -199,8 +207,10 @@ public class SingleImage extends ImageView {
         setY(yPos);
 
         // Setting image size according to scale
-        setFitWidth(imageWidth * scale);
-        setFitHeight(imageHeight * scale);
+        viewWidth = sourceWidth * scale;
+        viewHeight = sourceHeight * scale;
+        setFitWidth(sourceWidth * scale);
+        setFitHeight(sourceHeight * scale);
 
         // Setting angle of rotation
         setRotate(angle);
@@ -223,12 +233,100 @@ public class SingleImage extends ImageView {
         }).start();
     }
 
+    /*
+     * Method allows you to change the image file by specifying a new
+     * source for the image. The other 
+     */
+    public void changeSource(String source) {
+
+    }
+
+    /*
+     * Method allows you to change the x position of the image. All
+     * other properties will remain the same
+     */
+    public void changeX(double xPos) {
+
+    }
+
+    /*
+     * Method allows you to change the y position of the image. All
+     * other properties will remain the same
+     */
+    public void changeY(double yPos) {
+
+    }
+
+    /*
+     * Method allows you to change the scale of the image. This will
+     * change the view width and height of the image to be a multiple
+     * of their original dimensions (maintaining aspect ratio). If you
+     * have manually set a height and width, both of these properties
+     * will be changed by calling this method
+     */
+    public void changeScale(double scale) {
+
+    }
+
+    /*
+     * Method allows you to change the width of the image. This won't
+     * change the height, so the aspect ratio will no longer be 
+     * preserved (unless the height is changed in kind)
+     */
+    public void changeWidth(double width) {
+
+    }
+
+    /*
+     * Method allows you to change the height of the image. This 
+     * won't change the width, so the aspect ratio will no longer be
+     * preserved (unless the width is changed in kind)
+     */
+    public void changeHeight(double height) {
+
+    }
+
+    /*
+     * Method allows you to change the angle of the image. This
+     * will set the angle of rotation clockwise, not rotate the 
+     * image by a further amount
+     */
+    public void changeAngle(double angle) {
+
+    }
+
+    /*
+     * Method allows you to hide the image
+     */
+    public void hide() {
+        setVisible(false);
+    }
+
+    /*
+     * Method allows you to show the image
+     */
+    public void show() {
+        setVisible(true);
+    }
+
+    /*
+     * GETTER METHODS DECLARED BELOW
+     */
+
+    public double getSourceWidth() {
+        return sourceWidth;
+    }
+
+    public double getSourceHeight() {
+        return sourceHeight;
+    }
+
     public double getImageWidth() {
-        return imageWidth;
+        return viewWidth;
     }
 
     public double getImageHeight() {
-        return imageHeight;
+        return viewHeight;
     }
 
     public double getImageX() {
