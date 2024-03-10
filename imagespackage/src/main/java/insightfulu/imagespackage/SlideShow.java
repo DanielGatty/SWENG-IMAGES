@@ -2,34 +2,6 @@ package insightfulu.imagespackage;
 
 import java.util.ArrayList;
 
-/*
- * Methods of slideshow
- * 1. Add images to slide show (use varargs to do it all in one go)
- * 2. Add images to slide show (use varargs to do it all in one go, 
- *    this one is just string file names, not objects this time)
- * 3. Remove an image from the slideshow
- * 4. Change x position of the slideshow
- * 5. Change y position of the slideshow
- * 6. Change width of the slideshow
- * 7. Change height of the slideshow
- * 8. Change timings of slideshow
- * 9. Change direction of slideshow
- * 10. Stop the slideshow
- * 11. Start the slideshow again
- * 
- * Will also need
- * 1. getter for a particular image (let the user provide an index)
- * 2. getter for x position of slideshow
- * 3. getter for y position of slideshow
- * 4. getter for width of slideshow
- * 5. getter for height of slideshow
- * 6. getter for timings of slideshow
- * 7. getter for slideshow direction
- * 8. getter for length of slideshow
- * 9. getter for playing status of slideshow
- * 10. A method that will start the thread up that will start the slideshow
- */
-
 /**
  * SlideShow class represents all of the functionality for 
  * manipulating a series of images, displaying them in a
@@ -62,6 +34,7 @@ public class SlideShow {
         slideDuration = 1;
         slideDirection = Direction.FORWARD;
         isPlaying = false;
+        hasChanged = false;
     }
 
     public SlideShow(double xPos, double yPos) {
@@ -73,6 +46,7 @@ public class SlideShow {
         slideDuration = 1;
         slideDirection = Direction.FORWARD;
         isPlaying = false;
+        hasChanged = false;
     }
 
     public SlideShow(double xPos, double yPos, double width, double height) {
@@ -84,6 +58,7 @@ public class SlideShow {
         slideDuration = 1;
         slideDirection = Direction.FORWARD;
         isPlaying = false;
+        hasChanged = false;
     }
 
     public SlideShow(double xPos, double yPos, double width, double height, double duration) {
@@ -95,6 +70,7 @@ public class SlideShow {
         slideDuration = duration;
         slideDirection = Direction.FORWARD;
         isPlaying = false;
+        hasChanged = false;
     }
 
     public SlideShow(double xPos, double yPos, double width, double height, double duration, Direction direction) {
@@ -106,5 +82,90 @@ public class SlideShow {
         slideDuration = duration;
         slideDirection = direction;
         isPlaying = false;
+        hasChanged = false;
+    }
+
+    public void addImage(SingleImage ... images) {
+
+    }
+
+    public void addImage(String ... images) {
+
+    }
+
+    public void removeImage(int index) {
+
+    }
+
+    public void changeX(double xPos) {
+
+    }
+
+    public void changeY(double yPos) {
+
+    }
+
+    public void changeWidth(double width) {
+
+    }
+
+    public void changeHeight(double height) {
+
+    }
+
+    public void changeDuration(double duration) {
+
+    }
+
+    public void changeDirection(Direction direction) {
+
+    }
+
+    public void stop() {
+
+    }
+
+    public void play() {
+
+    }
+
+    private void startSlideShow() {
+
+    }
+
+    public SingleImage getImage(int index) {
+        return slides.get(index);
+    }
+
+    public double getX() {
+        return slideXPosition;
+    }
+
+    public double getY() {
+        return slideYPosition;
+    }
+
+    public double getWidth() {
+        return slideWidth;
+    }
+
+    public double getHeight() {
+        return slideHeight;
+    }
+
+    public double getDuration() {
+        return slideDuration;
+    }
+
+    public Direction getDirection() {
+        return slideDirection;
+    }
+
+    public int getLength() {
+        return slideLength;
+    }
+
+    public boolean isPlaying() {
+        return isPlaying;
     }
 }
