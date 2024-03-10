@@ -148,11 +148,6 @@ public class SingleImageTest extends ApplicationTest {
         assertEquals(false, singleImage.isVisible());
     }
 
-    // 7. change source
-    //      - set an image
-    //      - test that the image dimensions are equal to what we have set it to
-    //      - set a new image
-    //      - test that the image dimensions equal to what we have set it to
     // Testing the method for changing the source
     @Test
     void testChangeSource() throws FileNotFoundException {
