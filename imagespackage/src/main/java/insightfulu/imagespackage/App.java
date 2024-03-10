@@ -9,6 +9,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+import insightfulu.imagespackage.SlideShow.Direction;
+
 /**
  * JavaFX App
  */
@@ -21,13 +23,17 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException, InterruptedException {
         String filePath = "src/main/resources/images/stockimage.jpg";
-        double scale = 0.5;
-        double xPos = WIDTH / 2 - (1200 * scale) / 2;
-        double yPos = HEIGHT / 2 - (795 * scale) / 2;
+        String filePath2 = "src/main/resources/images/stockimage2.jpg";
+        String filePath3 = "src/main/resources/images/stockimage3.jpg";
 
-        SingleImage singleImage = new SingleImage(filePath, xPos, yPos, scale);
+        SingleImage image1 = new SingleImage(filePath);
 
-        Group root = new Group(singleImage);
+        SlideShow slideShow = new SlideShow(0, 0, WIDTH, HEIGHT, 2.5, Direction.BACKWARD);
+
+        slideShow.addImage(image1);
+        slideShow.addImage(filePath2, filePath3);
+
+        Group root = new Group(slideShow);
 
         scene = new Scene(root, WIDTH, HEIGHT);
 
@@ -36,6 +42,8 @@ public class App extends Application {
         stage.setScene(scene);
 
         stage.show();
+
+        slideShow.play();
     }
 
     static void setRoot(String fxml) throws IOException {
