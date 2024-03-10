@@ -3,12 +3,14 @@ package insightfulu.imagespackage;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
+import javafx.scene.image.ImageView;
+
 /**
  * SlideShow class represents all of the functionality for 
  * manipulating a series of images, displaying them in a
  * sequential manner
  */
-public class SlideShow {
+public class SlideShow extends ImageView {
     public enum Direction {
         FORWARD,
         BACKWARD
@@ -98,15 +100,9 @@ public class SlideShow {
 
     public void addImage(SingleImage ... images) {
         for (SingleImage image: images) {
-            image.hide();
-            image.changeX(slideXPosition);
-            image.changeY(slideYPosition);
             if (slideWidth == 0 && slideHeight == 0) {
                 slideWidth = image.getImageWidth();
                 slideHeight = image.getImageHeight();
-            } else {
-                image.changeWidth(slideWidth);
-                image.changeHeight(slideHeight);
             }
             slides.add(image);
             ++slideLength;
@@ -118,16 +114,10 @@ public class SlideShow {
         SingleImage newImage;
         for (String image: images) {
             newImage = new SingleImage(image);
-            newImage.hide();
-            newImage.changeX(slideXPosition);
-            newImage.changeY(slideYPosition);
             if (slideWidth == 0 && slideHeight == 0) {
                 slideWidth = newImage.getImageWidth();
                 slideHeight = newImage.getImageHeight();
-            } else {
-                newImage.changeWidth(slideWidth);
-                newImage.changeHeight(slideHeight);
-            }
+            } 
             slides.add(newImage);
             ++slideLength;
         }
@@ -135,40 +125,42 @@ public class SlideShow {
     }
 
     public void removeImage(int index) {
+        // What happens when we remove a picture
+        // send a has change = true to stop the slideshow
+        // remove the index
+        // if the index is less than the current index
+        //  - decrement the current index
+        // decrement the length
+        hasChanged = true;
         slides.remove(index);
+        if (index < slideCurrent) {
+            --slideCurrent;
+        }
         --slideLength;
         updateSlideShow();
     }
 
     public void changeX(double xPos) {
         slideXPosition = xPos;
-        for (SingleImage image: slides) {
-            image.changeX(xPos);
-        }
+        setX(xPos);
         updateSlideShow();
     }
 
     public void changeY(double yPos) {
         slideYPosition = yPos;  
-        for (SingleImage image: slides) {
-            image.changeY(yPos);
-        }
+        setY(yPos);
         updateSlideShow();
     }
 
     public void changeWidth(double width) {
         slideWidth = width;
-        for (SingleImage image: slides) {
-            image.changeWidth(width);
-        }
+        setFitWidth(width);
         updateSlideShow();
     }
 
     public void changeHeight(double height) {
         slideHeight = height;
-        for (SingleImage image: slides) {
-            image.changeHeight(height);
-        }
+        setFitHeight(height);
         updateSlideShow();
     }
 
@@ -194,54 +186,55 @@ public class SlideShow {
 
     private void updateSlideShow() {
         hasChanged = true;
-        new Thread (new Runnable() {
-            public void run() {
-                while (hasChanged == false) {
-                    slides.get(slideCurrent).show();
-                    try {
-                        Thread.sleep((int) (slideDuration * 1000));
-                    } catch (InterruptedException ie) {}
-                    slides.get(slideCurrent).hide();
-                    if (slideDirection == Direction.FORWARD) {
-                        ++slideCurrent;
-                    } else {
-                        --slideCurrent;
+        if (isPlaying) {
+            new Thread (new Runnable() { public void run() {
+                    hasChanged = false;
+                    while (hasChanged == false) {
+                        setImage(slides.get(slideCurrent).getImage());
+                        try {
+                            Thread.sleep((int) (slideDuration * 1000));
+                        } catch (InterruptedException ie) {}
+                        if (slideDirection == Direction.FORWARD) {
+                            ++slideCurrent;
+                        } else {
+                            --slideCurrent;
+                        }
+                        slideCurrent %= slideLength;
                     }
-                    slideCurrent %= slideLength;
                 }
-            }
-        }).start();
+            }).start();
+        }
     }
 
     public SingleImage getImage(int index) {
         return slides.get(index);
     }
 
-    public double getX() {
+    public double getSlideX() {
         return slideXPosition;
     }
 
-    public double getY() {
+    public double getSlideY() {
         return slideYPosition;
     }
 
-    public double getWidth() {
+    public double getSlideWidth() {
         return slideWidth;
     }
 
-    public double getHeight() {
+    public double getSlideHeight() {
         return slideHeight;
     }
 
-    public double getDuration() {
+    public double getSlideDuration() {
         return slideDuration;
     }
 
-    public Direction getDirection() {
+    public Direction getSlideDirection() {
         return slideDirection;
     }
 
-    public int getLength() {
+    public int getSlideLength() {
         return slideLength;
     }
 

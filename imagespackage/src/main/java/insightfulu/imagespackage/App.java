@@ -21,13 +21,17 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException, InterruptedException {
         String filePath = "src/main/resources/images/stockimage.jpg";
-        double scale = 0.5;
-        double xPos = WIDTH / 2 - (1200 * scale) / 2;
-        double yPos = HEIGHT / 2 - (795 * scale) / 2;
+        String filePath2 = "src/main/resources/images/stockimage2.jpg";
+        String filePath3 = "src/main/resources/images/stockimage3.jpg";
 
-        SingleImage singleImage = new SingleImage(filePath, xPos, yPos, scale);
+        SlideShow slideShow = new SlideShow();
 
-        Group root = new Group(singleImage);
+        slideShow.addImage(filePath, filePath2, filePath3);
+        slideShow.changeWidth(WIDTH);
+        slideShow.changeHeight(HEIGHT);
+        slideShow.changeDuration(3);
+
+        Group root = new Group(slideShow);
 
         scene = new Scene(root, WIDTH, HEIGHT);
 
@@ -36,6 +40,18 @@ public class App extends Application {
         stage.setScene(scene);
 
         stage.show();
+
+        slideShow.play();
+
+        new Thread ( new Runnable() {
+            public void run() {
+                try {
+                    Thread.sleep(30000);
+                } catch (InterruptedException ie) {}
+                slideShow.removeImage(0);
+                slideShow.changeDuration(1);
+            }
+        }).start();
     }
 
     static void setRoot(String fxml) throws IOException {
