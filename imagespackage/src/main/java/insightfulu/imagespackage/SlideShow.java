@@ -1,5 +1,6 @@
 package insightfulu.imagespackage;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 /**
@@ -23,7 +24,7 @@ public class SlideShow {
     private int slideLength;
     private int slideCurrent;
     private boolean isPlaying;
-    private boolean hasChanged;
+    private volatile boolean hasChanged;
 
     public SlideShow() {
         slides = new ArrayList<SingleImage>();
@@ -33,6 +34,8 @@ public class SlideShow {
         slideHeight = 0;
         slideDuration = 1;
         slideDirection = Direction.FORWARD;
+        slideLength = 0;
+        slideCurrent = 0;
         isPlaying = false;
         hasChanged = false;
     }
@@ -45,6 +48,8 @@ public class SlideShow {
         slideHeight = 0;
         slideDuration = 1;
         slideDirection = Direction.FORWARD;
+        slideLength = 0;
+        slideCurrent = 0;
         isPlaying = false;
         hasChanged = false;
     }
@@ -57,6 +62,8 @@ public class SlideShow {
         slideHeight = height;
         slideDuration = 1;
         slideDirection = Direction.FORWARD;
+        slideLength = 0;
+        slideCurrent = 0;
         isPlaying = false;
         hasChanged = false;
     }
@@ -69,6 +76,8 @@ public class SlideShow {
         slideHeight = height;
         slideDuration = duration;
         slideDirection = Direction.FORWARD;
+        slideLength = 0;
+        slideCurrent = 0;
         isPlaying = false;
         hasChanged = false;
     }
@@ -81,56 +90,108 @@ public class SlideShow {
         slideHeight = height;
         slideDuration = duration;
         slideDirection = direction;
+        slideLength = 0;
+        slideCurrent = 0;
         isPlaying = false;
         hasChanged = false;
     }
 
     public void addImage(SingleImage ... images) {
-
+        for (SingleImage image: images) {
+            image.changeX(slideXPosition);
+            image.changeY(slideYPosition);
+            if (slideWidth == 0 && slideHeight == 0) {
+                slideWidth = image.getImageWidth();
+                slideHeight = image.getImageHeight();
+            } else {
+                image.changeWidth(slideWidth);
+                image.changeHeight(slideHeight);
+            }
+            slides.add(image);
+            ++slideLength;
+        }
+        updateSlideShow();
     }
 
-    public void addImage(String ... images) {
-
+    public void addImage(String ... images) throws FileNotFoundException {
+        SingleImage newImage;
+        for (String image: images) {
+            newImage = new SingleImage(image);
+            newImage.changeX(slideXPosition);
+            newImage.changeY(slideYPosition);
+            if (slideWidth == 0 && slideHeight == 0) {
+                slideWidth = newImage.getImageWidth();
+                slideHeight = newImage.getImageHeight();
+            } else {
+                newImage.changeWidth(slideWidth);
+                newImage.changeHeight(slideHeight);
+            }
+            slides.add(newImage);
+            ++slideLength;
+        }
+        updateSlideShow();
     }
 
     public void removeImage(int index) {
-
+        slides.remove(index);
+        --slideLength;
+        updateSlideShow();
     }
 
     public void changeX(double xPos) {
-
+        slideXPosition = xPos;
+        for (SingleImage image: slides) {
+            image.changeX(xPos);
+        }
+        updateSlideShow();
     }
 
     public void changeY(double yPos) {
-
+        slideYPosition = yPos;  
+        for (SingleImage image: slides) {
+            image.changeY(yPos);
+        }
+        updateSlideShow();
     }
 
     public void changeWidth(double width) {
-
+        slideWidth = width;
+        for (SingleImage image: slides) {
+            image.changeWidth(width);
+        }
+        updateSlideShow();
     }
 
     public void changeHeight(double height) {
-
+        slideHeight = height;
+        for (SingleImage image: slides) {
+            image.changeHeight(height);
+        }
+        updateSlideShow();
     }
 
     public void changeDuration(double duration) {
-
+        slideDuration = duration;
+        updateSlideShow();
     }
 
     public void changeDirection(Direction direction) {
-
+        slideDirection = direction;
+        updateSlideShow();
     }
 
     public void stop() {
-
+        isPlaying = false;
+        updateSlideShow();
     }
 
     public void play() {
-
+        isPlaying = true;
+        updateSlideShow();
     }
 
-    private void startSlideShow() {
-
+    private void updateSlideShow() {
+        hasChanged = true;
     }
 
     public SingleImage getImage(int index) {
