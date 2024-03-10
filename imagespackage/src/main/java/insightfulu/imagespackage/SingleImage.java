@@ -15,12 +15,12 @@ public class SingleImage extends ImageView {
     // Constants related to the image, these can be manipulated
     private double sourceWidth; // Based on source image
     private double sourceHeight; // Based on source image
-    private double viewWidth;
-    private double viewHeight;
-    private double xPosition;
-    private double yPosition;
+    private double viewWidth; // Based on displayed image
+    private double viewHeight; // Based on displayed image
+    private double xPosition; // Taken from top left corner
+    private double yPosition; // Taken from top left corner
     private double scale; // Scale can go above 1.0 to enlarge images
-    private double angle;
+    private double angle; // Angle is measured clockwise
 
     private Image image;
 
@@ -61,8 +61,8 @@ public class SingleImage extends ImageView {
         // Image position is based on top left corner of image
         xPosition = xPos;
         yPosition = yPos;
-        setX(xPos);
-        setY(yPos);
+        setX(xPosition);
+        setY(yPosition);
 
         // Default behaviour is to preserve aspect ratio
         setPreserveRatio(true);
@@ -86,14 +86,15 @@ public class SingleImage extends ImageView {
         // Image position is based on top left corner of image
         xPosition = xPos;
         yPosition = yPos;
-        setX(xPos);
-        setY(yPos);
+        setX(xPosition);
+        setY(yPosition);
 
         // Setting image size according to scale
+        this.scale = scale;
         viewWidth = sourceWidth * scale;
         viewHeight = sourceHeight * scale;
-        setFitWidth(sourceWidth * scale);
-        setFitHeight(sourceHeight * scale);
+        setFitWidth(viewWidth);
+        setFitHeight(viewHeight);
 
         // Default behaviour is to preserve aspect ratio
         setPreserveRatio(true);
@@ -119,16 +120,18 @@ public class SingleImage extends ImageView {
         // Image position is based on top left corner of image
         xPosition = xPos;
         yPosition = yPos;
-        setX(xPos);
-        setY(yPos);
+        setX(xPosition);
+        setY(yPosition);
 
         // Setting image size according to scale
+        this.scale = scale;
         viewWidth = sourceWidth * scale;
         viewHeight = sourceHeight * scale;
-        setFitWidth(sourceWidth * scale);
-        setFitHeight(sourceHeight * scale);
+        setFitWidth(viewWidth);
+        setFitHeight(viewHeight);
 
         // Setting angle of rotation
+        this.angle = angle;
         setRotate(angle);
 
         // Default behaviour is to preserve aspect ratio
@@ -156,16 +159,18 @@ public class SingleImage extends ImageView {
         // Image position is based on top left corner of image
         xPosition = xPos;
         yPosition = yPos;
-        setX(xPos);
-        setY(yPos);
+        setX(xPosition);
+        setY(yPosition);
 
         // Setting image size according to scale
+        this.scale = scale;
         viewWidth = sourceWidth * scale;
         viewHeight = sourceHeight * scale;
-        setFitWidth(sourceWidth * scale);
-        setFitHeight(sourceHeight * scale);
+        setFitWidth(viewWidth);
+        setFitHeight(viewHeight);
 
         // Setting angle of rotation
+        this.angle = angle;
         setRotate(angle);
 
         // Default behaviour is to preserve aspect ratio
@@ -203,16 +208,18 @@ public class SingleImage extends ImageView {
         // Image position is based on top left corner of image
         xPosition = xPos;
         yPosition = yPos;
-        setX(xPos);
-        setY(yPos);
+        setX(xPosition);
+        setY(yPosition);
 
         // Setting image size according to scale
+        this.scale = scale;
         viewWidth = sourceWidth * scale;
         viewHeight = sourceHeight * scale;
-        setFitWidth(sourceWidth * scale);
-        setFitHeight(sourceHeight * scale);
+        setFitWidth(viewWidth);
+        setFitHeight(viewHeight);
 
         // Setting angle of rotation
+        this.angle = angle;
         setRotate(angle);
 
         // Default behaviour is to preserve aspect ratio
@@ -237,8 +244,12 @@ public class SingleImage extends ImageView {
      * Method allows you to change the image file by specifying a new
      * source for the image. The other 
      */
-    public void changeSource(String source) {
-
+    public void changeSource(String source) throws FileNotFoundException {
+        File imageFile = new File(source);
+        image = new Image(new FileInputStream(imageFile));
+        setImage(image);
+        sourceWidth = image.getWidth();
+        sourceHeight = image.getHeight();
     }
 
     /*
@@ -246,7 +257,8 @@ public class SingleImage extends ImageView {
      * other properties will remain the same
      */
     public void changeX(double xPos) {
-
+        xPosition = xPos;
+        setX(xPosition);
     }
 
     /*
@@ -254,7 +266,8 @@ public class SingleImage extends ImageView {
      * other properties will remain the same
      */
     public void changeY(double yPos) {
-
+        yPosition = yPos;
+        setY(yPosition);
     }
 
     /*
@@ -265,7 +278,12 @@ public class SingleImage extends ImageView {
      * will be changed by calling this method
      */
     public void changeScale(double scale) {
-
+        this.scale = scale;
+        viewWidth = sourceWidth * scale;
+        viewHeight = sourceHeight * scale;
+        setPreserveRatio(true);
+        setFitWidth(viewWidth);
+        setFitHeight(viewHeight);
     }
 
     /*
@@ -274,7 +292,9 @@ public class SingleImage extends ImageView {
      * preserved (unless the height is changed in kind)
      */
     public void changeWidth(double width) {
-
+        viewWidth = width;
+        setPreserveRatio(false);
+        setFitWidth(width);
     }
 
     /*
@@ -283,7 +303,9 @@ public class SingleImage extends ImageView {
      * preserved (unless the width is changed in kind)
      */
     public void changeHeight(double height) {
-
+        viewHeight = height;
+        setPreserveRatio(false);
+        setFitHeight(height);
     }
 
     /*
@@ -292,7 +314,8 @@ public class SingleImage extends ImageView {
      * image by a further amount
      */
     public void changeAngle(double angle) {
-
+        this.angle = angle;
+        setRotate(angle);
     }
 
     /*
