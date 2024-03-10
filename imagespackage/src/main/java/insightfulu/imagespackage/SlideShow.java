@@ -206,36 +206,36 @@ public class SlideShow extends ImageView {
         updateSlideShow();
     }
 
-    public void changeX(double xPos) {
+    public void changeSlideX(double xPos) {
         slideXPosition = xPos;
         setX(xPos);
         updateSlideShow();
     }
 
-    public void changeY(double yPos) {
+    public void changeSlideY(double yPos) {
         slideYPosition = yPos;  
         setY(yPos);
         updateSlideShow();
     }
 
-    public void changeWidth(double width) {
+    public void changeSlideWidth(double width) {
         slideWidth = width;
         setFitWidth(width);
         updateSlideShow();
     }
 
-    public void changeHeight(double height) {
+    public void changeSlideHeight(double height) {
         slideHeight = height;
         setFitHeight(height);
         updateSlideShow();
     }
 
-    public void changeDuration(double duration) {
+    public void changeSlideDuration(double duration) {
         slideDuration = duration;
         updateSlideShow();
     }
 
-    public void changeDirection(Direction direction) {
+    public void changeSlideDirection(Direction direction) {
         slideDirection = direction;
         updateSlideShow();
     }
@@ -310,6 +310,10 @@ public class SlideShow extends ImageView {
 
     public int getSlideLength() {
         return slides.size();
+    }
+
+    public int getSlideCurrent() {
+        return slideCurrent;
     }
 
     public boolean isPlaying() {
