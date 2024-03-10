@@ -14,7 +14,7 @@ complies with the project wide standards specified.
 
 In order to meet this contract, the package contains two relevant classes:
 1. SingleImage
-2. Presentation
+2. SlideShow
 
 The properties the SingleImage needs to be able to control are: 
 1. The image source
@@ -44,31 +44,31 @@ Methods for SingleImage:
 7. The ability to hide the image
 8. The ability to show the image
 
-The properties the Presentation needs to be able to control are:
+The properties the SlideShow needs to be able to control are:
 1. The images themselves (i.e. adding and removing images)
-2. The position of the presentation
-3. The width of the presentation
-4. The height of the presentation
-5. The timings of the presentation 
-6. The direction of the presentation (forwards or backwards)
+2. The position of the SlideShow
+3. The width of the SlideShow
+4. The height of the SlideShow
+5. The timings of the SlideShow 
+6. The direction of the SlideShow (forwards or backwards)
 7. Start / Stop status
 
-Constructors for Presentation:
+Constructors for SlideShow:
 1. Nothing specified
-2. The position of the presentation
-3. The position of the presentation, width, height
-4. The position of the presentation, width, height, timings
-5. The position of the presentation, width, height, timings, direction
+2. The position of the SlideShow
+3. The position of the SlideShow, width, height
+4. The position of the SlideShow, width, height, timings
+5. The position of the SlideShow, width, height, timings, direction
 
-Methods for Presentation:
-1. The ability to add images to the presentation (use varargs to do it all in one go)
-2. The ability to remove an image from the presentation
-3. The ability to reposition the presentation
-4. The ability to change the presentation width
-5. The ability to change the presentation height
-6. The ability to change presentation timings
-7. The ability to change presentation direction
-8. The ability to stop the presentation
-9. The ability to start the presentation
+Methods for SlideShow:
+1. The ability to add images to the SlideShow (use varargs to do it all in one go)
+2. The ability to remove an image from the SlideShow
+3. The ability to reposition the SlideShow
+4. The ability to change the SlideShow width
+5. The ability to change the SlideShow height
+6. The ability to change SlideShow timings
+7. The ability to change SlideShow direction
+8. The ability to stop the SlideShow
+9. The ability to start the SlideShow
 
 Transitions between images are by default instant, but fading may be implemented on a time dependent basis.
