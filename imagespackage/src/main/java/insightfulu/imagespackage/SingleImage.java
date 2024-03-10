@@ -174,6 +174,55 @@ public class SingleImage extends ImageView {
         }).start();
     }
 
+    /*
+     * Constructor requires the full set of parameters for the image. The size
+     * will be the original dimensions multiplied by the scale, and will be 
+     * displayed at x,y. The image will be rotated at a specified number of 
+     * degrees rotated clockwise about the center of the image. The image will
+     * be shown after the delay, and will be hidden after the duration, both
+     * with millisecond resolution.
+     */
+    public SingleImage(String source, double xPos, double yPos, double scale, double angle, double delay, double duration) throws FileNotFoundException {
+        // Loading image file
+        File imageFile = new File(source);
+        image = new Image(new FileInputStream(imageFile));
+        setImage(image);
+
+        // Dimensions are based on original image size
+        imageWidth = image.getWidth();
+        imageHeight = image.getHeight();
+
+        // Image position is based on top left corner of image
+        xPosition = xPos;
+        yPosition = yPos;
+        setX(xPos);
+        setY(yPos);
+
+        // Setting image size according to scale
+        setFitWidth(imageWidth * scale);
+        setFitHeight(imageHeight * scale);
+
+        // Setting angle of rotation
+        setRotate(angle);
+
+        // Default behaviour is to preserve aspect ratio
+        setPreserveRatio(true);
+
+        setVisible(false);
+        new Thread ( new Runnable() {
+            public void run() {
+                try {
+                    Thread.sleep((int) (delay * 1000));
+                } catch (InterruptedException ie) {}
+                setVisible(true);
+                try {
+                    Thread.sleep((int) (duration * 1000));
+                } catch (InterruptedException ie) {}
+                setVisible(false);
+            }
+        }).start();
+    }
+
     public double getImageWidth() {
         return imageWidth;
     }

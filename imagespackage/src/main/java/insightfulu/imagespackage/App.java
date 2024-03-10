@@ -25,7 +25,7 @@ public class App extends Application {
         double xPos = WIDTH / 2 - (1200 * scale) / 2;
         double yPos = HEIGHT / 2 - (795 * scale) / 2;
 
-        SingleImage singleImage = new SingleImage(filePath, xPos, yPos, scale, 0, 0);
+        SingleImage singleImage = new SingleImage(filePath, xPos, yPos, scale, 0, 2.5, 2.5);
 
         Group root = new Group(singleImage);
 
